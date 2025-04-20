@@ -69,4 +69,4 @@ streamlit run main.py
 ## Usage
 1. Enter a query (artist, track, year, genre, mood).
 2. Leave blank to use time-of-day defaults (morning/afternoon/evening/night).
-3. See 5 recommendations per model; view the best model by average popularity.
+3. See 5 recommendations per model; view the best model by weighted average popularity.
