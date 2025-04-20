@@ -26,5 +26,5 @@ WEIGHTS = {
     'Hybrid': 1.0,
     'ML': 1.0,
     'DL': 1.0,
-    'Word2Vec': 1.0  # boost semantic model
+    'Word2Vec': 1.0
 }

@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # Audio features used for KNN
 AUDIO_FEATURES = ['danceability', 'energy', 'loudness', 'tempo', 'valence']
 TFIDF_NAME = 'tfidf.pkl'
-W2V_MODEL_NAME = 'w2v_model.model'
+W2V_MODEL_NAME = 'models/w2v_model.model'
 W2V_EMB_NAME = 'w2v_embeddings'
 
 def preprocess_features(df):
