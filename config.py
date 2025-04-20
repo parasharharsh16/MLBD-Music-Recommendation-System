@@ -21,10 +21,19 @@ KNN_K = 5
 
 # Ensemble weights for pointwise scoring
 WEIGHTS = {
-    'Metadata': 1.0,
-    'Audio': 1.0,
-    'Hybrid': 1.0,
-    'ML': 1.0,
-    'DL': 1.0,
-    'Word2Vec': 1.0
+    'Collaborative Filtering': 0.65,
+    'Content-Based Filtering': 1.5,
+    'Hybrid': 0.72,
+    'Random Forest': 0.8,
+    'Autoencoder': 0.85,
+    'Semantic Model': 1.43
 }
+
+# = {
+#     'Metadata': 1.0,
+#     'Audio': 1.0,
+#     'Hybrid': 1.0,
+#     'ML': 1.0,
+#     'DL': 1.0,
+#     'Word2Vec': 1.0
+# }

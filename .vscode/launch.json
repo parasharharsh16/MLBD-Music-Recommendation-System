@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "debugpy",
+        "request": "launch",
+        "name": "Launch Main Program",
+        "program": "${workspaceFolder}/${input:programPath}"
+      }
+    ],
+    "inputs": [
+      {
+        "type": "pickString",
+        "id": "programPath",
+        "description": "Select the Python file to debug",
+        "options": [
+          "main.py",
+          "src/audio_recommender.py",
+          "src/content_recommender.py",
+          "src/data_loader.py",
+          "src/dl_recommender.py",
+          "src/evaluation.py",
+          "src/hybrid_recommender.py",
+          "src/ml_recommender.py",
+          "src/preprocessing.py",
+          "src/w2v_recommender.py"
+        ]
+      }
+    ]
+  }

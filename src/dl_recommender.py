@@ -50,10 +50,27 @@ class DLRecommender:
         self.emb = emb
         self.df = df
 
-    def recommend(self, q: str, k: int = KNN_K) -> list:
+    # def recommend(self, q: str, k: int = KNN_K) -> list:
+    #     mask = self.df['track_name'].str.contains(q.lower().strip(), case=False, na=False)
+    #     if not mask.any():
+    #         return self.df.sample(k)['track_name'].tolist()
+    #     i = mask.idxmax()
+    #     _, neigh = self.nn.kneighbors(self.emb[i].reshape(1, -1), n_neighbors=k+1)
+    #     return self.df.iloc[neigh[0][1:]]['track_name'].tolist()
+    def recommend(self, q: str, k: int = KNN_K) -> list[tuple[str, float]]:
         mask = self.df['track_name'].str.contains(q.lower().strip(), case=False, na=False)
+        
         if not mask.any():
-            return self.df.sample(k)['track_name'].tolist()
+            # Return k random samples with score 0.0
+            random_tracks = self.df.sample(k)['track_name'].tolist()
+            return [(track, 0.0) for track in random_tracks]
+
         i = mask.idxmax()
-        _, neigh = self.nn.kneighbors(self.emb[i].reshape(1, -1), n_neighbors=k+1)
-        return self.df.iloc[neigh[0][1:]]['track_name'].tolist()
+        dists, neigh = self.nn.kneighbors(self.emb[i].reshape(1, -1), n_neighbors=k+1)
+        
+        # Skip the first neighbor (the track itself), and return (track_name, similarity_score)
+        neighbors = neigh[0][1:]
+        distances = dists[0][1:]
+        scores = 1 / (1 + distances)  # Convert distance to similarity score (range: (0,1])
+
+        return [(self.df.iloc[idx]['track_name'], float(score)) for idx, score in zip(neighbors, scores)]

@@ -44,15 +44,18 @@ class MLRecommender:
         self.txt_emb = txt_emb
         self.df = df
 
-    def recommend(self, q: str, k: int = KNN_K) -> list:
+    def recommend(self, q: str, k: int = KNN_K) -> list[tuple[str, float]]:
         """
         Recommend tracks matching query, ranked by predicted popularity.
         If no match, fallback to global popularity.
+        Returns a list of (track_name, normalized_score) tuples.
         """
         logger.info('MLRecommender: recommending for query "%s"', q)
         processed = normalize(q)
+        
         # Filter candidates by query
         mask = self.df['track_name'].str.contains(processed, case=False, na=False)
+        
         if mask.any():
             # Predict popularity for matched tracks
             X_cand = np.hstack([
@@ -60,11 +63,24 @@ class MLRecommender:
                 self.txt_emb[mask]
             ])
             preds = self.model.predict(X_cand)
+            
+            # Normalize predictions between 0 and 1
+            min_score, max_score = preds.min(), preds.max()
+            range_score = max_score - min_score if max_score > min_score else 1.0
+            preds = (preds - min_score) / range_score
+
             cand_df = self.df[mask].reset_index(drop=True)
             top_idx = np.argsort(preds)[-k:][::-1]
-            return cand_df.loc[top_idx, 'track_name'].tolist()
+            return [(cand_df.loc[i, 'track_name'], float(preds[i])) for i in top_idx]
+
         # Fallback: top global predicted popularity
         X_all = np.hstack([self.audio_mat, self.txt_emb])
         preds_all = self.model.predict(X_all)
+
+        # Normalize fallback predictions
+        min_score, max_score = preds_all.min(), preds_all.max()
+        range_score = max_score - min_score if max_score > min_score else 1.0
+        preds_all = (preds_all - min_score) / range_score
+
         top_all = np.argsort(preds_all)[-k:][::-1]
-        return self.df.iloc[top_all]['track_name'].tolist()
+        return [(self.df.iloc[i]['track_name'], float(preds_all[i])) for i in top_all]

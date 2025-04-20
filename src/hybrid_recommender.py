@@ -24,24 +24,32 @@ class HybridRecommender:
         self.nn_audio = NearestNeighbors(metric='euclidean')
         self.nn_audio.fit(audio_mat)
 
-    def recommend(self, q: str, k: int = KNN_K) -> list:
+    def recommend(self, q: str, k: int = KNN_K) -> list[tuple[str, float]]:
+        """
+        Hybrid recommender combining metadata and audio similarity.
+        Returns a list of (track_name, normalized score [0,1]).
+        """
         processed = normalize(q)
+        
         # Metadata neighbors
         vec = self.tfidf.transform([processed])
         _, m_idx = self.nn_meta.kneighbors(vec, n_neighbors=k * 2)
+
         # Audio neighbors
         mask = self.df['track_name'].str.contains(processed, case=False, na=False)
         if not mask.any():
-            return self.df.sample(k)['track_name'].tolist()
+            return [(name, 0.0) for name in self.df.sample(k)['track_name'].tolist()]
+        
         seed_idx = mask.idxmax()
-        _, a_idx = self.nn_audio.kneighbors(
-            self.audio_mat[seed_idx].reshape(1, -1),
-            n_neighbors=k * 2
-        )
-        # Combine rankings
+        _, a_idx = self.nn_audio.kneighbors(self.audio_mat[seed_idx].reshape(1, -1), n_neighbors=k * 2)
+
+        # Combine and count frequencies
         combined = list(m_idx[0]) + list(a_idx[0])
         counts = Counter(combined)
-        # Exclude the seed track
         counts.pop(seed_idx, None)
+
+        # Normalize scores to [0, 1]
+        max_score = max(counts.values()) if counts else 1
         top_indices = [idx for idx, _ in counts.most_common(k)]
-        return self.df.iloc[top_indices]['track_name'].tolist()
+
+        return [(self.df.iloc[idx]['track_name'], counts[idx] / max_score) for idx in top_indices]
