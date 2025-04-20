@@ -1,22 +1,11 @@
-# Core Libraries
 pandas
 numpy
 scikit-learn
-
-# Big Data & Distributed Processing
-pyspark
-
-# Web App Interface
 streamlit
-flask
-
-# Visualization (optional)
-matplotlib
-
-# Utility Libraries (optional)
-requests
-
-ipykernel
-findspark
-scikit-surprise
+lightfm
+torch
 joblib
+tqdm
+gensim
+nltk
+ipykernel
