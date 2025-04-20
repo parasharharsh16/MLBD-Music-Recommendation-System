@@ -44,7 +44,7 @@ music_recommender_app/
 
 ## Setup
 ```bash
-git clone <repo_url>
+git clone https://github.com/parasharharsh16/MLBD-Music-Recommendation-System.git
 cd music_recommender_app
 pip install -r requirements.txt
 ```
