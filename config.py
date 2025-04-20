@@ -1,0 +1,1 @@
+collaborative_filtering_model_path = "models/collaborative_filtering_model"
