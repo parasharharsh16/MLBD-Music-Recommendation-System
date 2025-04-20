@@ -1,0 +1,17 @@
+# Core Libraries
+pandas==2.2.1
+numpy==1.26.4
+scikit-learn==1.4.2
+
+# Big Data & Distributed Processing
+pyspark==3.5.1
+
+# Web App Interface
+streamlit==1.33.0
+flask==3.0.2
+
+# Visualization (optional)
+matplotlib==3.8.4
+
+# Utility Libraries (optional)
+requests==2.31.0
