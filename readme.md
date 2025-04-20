@@ -2,6 +2,13 @@
 
 A Streamlit application that provides song recommendations based on flexible user input (artist, track, year, genre, mood, or time of day). Implements five recommendation models: Metadata KNN, Audio KNN, Hybrid KNN, Random Forest (ML), and Autoencoder (DL).
 
+## 👥 Contributors
+- Prateek Singhal (M22AIE215)
+- Harsh Parashar (M22AIE210)
+- Ayush Mishra (M22AIE251)
+
+
+
 #### Folder Structure
 ```plaintext
 music_recommender_app/
