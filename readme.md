@@ -1,4 +1,5 @@
-# Music Recommender App
+# EchoMind : Music Recommender App
+## Personalized soundscapes powered by machine learning
 
 A Streamlit application that provides song recommendations based on flexible user input (artist, track, year, genre, mood, or time of day). Implements five recommendation models: Metadata KNN, Audio KNN, Hybrid KNN, Random Forest (ML), and Autoencoder (DL).
 
