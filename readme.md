@@ -3,7 +3,7 @@
  Personalized soundscapes powered by machine learning
 
 
-A Streamlit application that provides song recommendations based on flexible user input (artist, track, year, genre, mood, or time of day). Implements six recommendation models: Metadata KNN, Audio KNN, Hybrid KNN, scmentic(word2vec), Random Forest (ML), and Autoencoder (DL).
+A Streamlit application that provides song recommendations based on flexible user input (artist, track, year, genre, mood, or time of day). Implements six recommendation models: Metadata KNN, Audio KNN, Hybrid KNN, semantic(word2vec), Random Forest (ML), and Autoencoder (DL).
 
 ## 👥 Contributors
 - Prateek Singhal (M22AIE215)
